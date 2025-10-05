@@ -7,11 +7,6 @@ server <- function(input, output, session) { # Adicionado 'session' para usar sh
   # Adicionar CSS para sidebar pegajosa usando shinyjs
   shinyjs::runjs("$('#sidebar').css('position', 'sticky').css('top', '80px');")
   
-  # Lógica para alternar a sidebar em dispositivos móveis
-  observeEvent(input$toggle_sidebar_btn, {
-    shinyjs::toggle(id = "sidebar")
-  })
-  
   # Filtragem dos dados baseada no período selecionado
   dados_filtrados <- reactive({
     dados_combinados %>%
@@ -191,7 +186,12 @@ server <- function(input, output, session) { # Adicionado 'session' para usar sh
     grafico_interativo <- ggplotly(p, tooltip = "text") %>%
       layout(
         hovermode = "x unified",
-        legend = list(orientation = "h", x = 0.5, xanchor = "center", y = 1.1)
+        legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.2, font = list(size = 12)), # Legenda abaixo
+        title = list(font = list(size = 16)), # Título com fonte maior
+        xaxis = list(title = list(font = list(size = 14)), tickfont = list(size = 12)), # Eixo X com fonte maior
+        yaxis = list(title = list(font = list(size = 14)), tickfont = list(size = 12)), # Eixo Y com fonte maior
+        autosize = TRUE,
+        margin = list(b = 100) # Aumenta a margem inferior para a legenda
       )
     
     # Exibir gráfico interativo
@@ -216,9 +216,13 @@ server <- function(input, output, session) { # Adicionado 'session' para usar sh
                           name = "Regressão (Regra de Taylor Simplificada)")
     
     p %>%
-      layout(title = "Regressão Simplificada (Tipo Taylor Rule)",
-                xaxis = list(title = "IPCA (%)"),
-                yaxis = list(title = "SELIC (%)"))
+      layout(title = list(text = "Regressão Simplificada (Tipo Taylor Rule)", font = list(size = 16)),
+                xaxis = list(title = list(text = "IPCA (%)", font = list(size = 14)), tickfont = list(size = 12)),
+                yaxis = list(title = list(text = "SELIC (%)", font = list(size = 14)), tickfont = list(size = 12)),
+                legend = list(orientation = "h", x = 0.5, xanchor = "center", y = -0.2, font = list(size = 12)), # Legenda abaixo
+                autosize = TRUE,
+                margin = list(b = 100) # Aumenta a margem inferior para a legenda
+                )
   })
 
   # Taylor Rule Summary

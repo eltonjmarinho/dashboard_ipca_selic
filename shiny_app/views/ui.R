@@ -4,6 +4,7 @@ library(shinythemes)
 library(plotly)
 library(shinyjs)
 library(shinyWidgets)
+library(shinycssloaders)
 
 ui <- fluidPage(
   theme = shinytheme("cerulean"),
@@ -14,25 +15,15 @@ ui <- fluidPage(
       .datepicker {
         z-index: 1060 !important; /* Ensure datepicker is above the navbar (default z-index is 1050) */
       }
-      /* Esconder o botão em telas maiores que 768px (tamanho de tablet) */
-      @media (min-width: 768px) {
-        #toggle_sidebar_btn {
-          display: none !important; /* Garante que esteja escondido em desktop */
-        }
-      }
-      /* Mostrar o botão em telas menores que 768px */
+      /* Ajustar a sidebar para ocupar a largura total em telas pequenas */
       @media (max-width: 767px) {
-        #toggle_sidebar_btn {
-          display: block !important; /* Mostra o botão em mobile */
-          margin-top: 10px; /* Adiciona um pouco de espaço acima do botão */
-          margin-bottom: 10px; /* Adiciona um pouco de espaço abaixo do botão */
-        }
         .col-sm-4 { /* Largura da sidebar em fluidRow */
           width: 100%;
         }
         .col-sm-8 { /* Largura do mainPanel em fluidRow */
           width: 100%;
         }
+      }
     "))
   ),
   
@@ -70,10 +61,6 @@ ui <- fluidPage(
                ),
                
                mainPanel(
-                 # Botão para alternar a sidebar em dispositivos móveis (visível apenas em mobile)
-                 actionButton("toggle_sidebar_btn", "", icon = icon("filter"),
-                              class = "btn-primary pull-right",
-                              style = "margin-bottom: 15px; display: none;"), # Escondido por padrão
                  tabsetPanel(
                    # Painel de Análise Geral
                    tabPanel("Análise Geral",
@@ -107,10 +94,10 @@ ui <- fluidPage(
                                                 plotlyOutput("pacf_plot", height = "auto")),
                                        tabPanel("Modelo ARIMA",
                                                 br(),
-                                                verbatimTextOutput("arima_summary")),
+                                                withSpinner(verbatimTextOutput("arima_summary"), type = 8, color = "#337ab7")),
                                        tabPanel("Projeção SELIC",
                                                 br(),
-                                                plotlyOutput("projection_plot", height = "auto")),
+                                                withSpinner(plotlyOutput("projection_plot", height = "auto"), type = 8, color = "#337ab7")),
                                        tabPanel("Regressão (Taylor Rule)",
                                                 br(),
                                                 plotlyOutput("taylor_plot", height = "auto"),
@@ -122,7 +109,7 @@ ui <- fluidPage(
              )
     ),
     tabPanel("Suporte",
-             fluidPage( # Este fluidPage é redundante, mas vou mantê-lo por enquanto para evitar mais erros de sintaxe
+             fluidPage(
                h3("Precisa de Suporte?"),
                p("Se você precisar de ajuda ou tiver alguma dúvida sobre a aplicação, por favor, entre em contato conosco."),
                p(HTML("Envie um e-mail para: <strong>eltonjmarinho@gmail.com</strong>")),
