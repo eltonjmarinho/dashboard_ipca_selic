@@ -1,0 +1,9 @@
+shiny==1.11.1
+shinythemes==1.2.0
+shinyjs==2.1.0
+BETS==0.4.9
+tidyverse==2.0.0
+plotly==4.11.0
+zoo==1.8.14
+forecast==8.24.0
+shinyWidgets==0.9.0
