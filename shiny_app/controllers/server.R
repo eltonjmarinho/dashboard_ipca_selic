@@ -7,6 +7,11 @@ server <- function(input, output, session) { # Adicionado 'session' para usar sh
   # Adicionar CSS para sidebar pegajosa usando shinyjs
   shinyjs::runjs("$('#sidebar').css('position', 'sticky').css('top', '80px');")
   
+  # Lógica para alternar a sidebar em dispositivos móveis
+  observeEvent(input$toggle_sidebar_btn, {
+    shinyjs::toggle(id = "sidebar")
+  })
+  
   # Filtragem dos dados baseada no período selecionado
   dados_filtrados <- reactive({
     dados_combinados %>%

@@ -5,6 +5,6 @@ account: ppge-econometria
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 15661809
-bundleId: 10995061
+bundleId: 10995230
 url: https://ppge-econometria.shinyapps.io/shiny_app/
 version: 1

@@ -1,9 +1,9 @@
 load_data <- function() {
-  ipca_csv_path <- "../data/ipca_df.csv"
-  selic_csv_path <- "../data/selic_df.csv"
+  ipca_csv_path <- "data/ipca_df.csv"
+  selic_csv_path <- "data/selic_df.csv"
   
-  ipca_rds_path <- "../data/ipca_data.rds"
-  selic_rds_path <- "../data/selic_data.rds"
+  ipca_rds_path <- "data/ipca_data.rds"
+  selic_rds_path <- "data/selic_data.rds"
 
   # Prioritize reading from CSV files
   if (file.exists(ipca_csv_path) && file.exists(selic_csv_path)) {
